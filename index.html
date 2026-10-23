@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Misje Informatyczne 4–7</title>
+<style>
+:root{
+  --ink:#24324a;--muted:#6b7280;--line:#e5e7eb;--bg:#f8fafc;
+  --blue:#bfdbfe;--violet:#ddd6fe;--mint:#99f6e4;--yellow:#fde68a;
+  --green:#22c55e;--red:#e11d48;--shadow:0 14px 34px rgba(36,50,74,.10)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Inter,ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 4%,#dbeafe 0,transparent 23%),
+    radial-gradient(circle at 92% 8%,#ede9fe 0,transparent 23%),
+    radial-gradient(circle at 80% 95%,#ccfbf1 0,transparent 20%),
+    var(--bg);
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.top{position:sticky;top:0;z-index:30;background:rgba(248,250,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(36,50,74,.08)}
+.topin{max-width:1200px;margin:auto;padding:12px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.logo{font-weight:950}.logo b{color:#2563eb}
+.actions-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:850}
+.btn{border:0;border-radius:14px;padding:12px 16px;font-weight:900;color:var(--ink)}
+.btn-blue{background:var(--blue)}.btn-violet{background:var(--violet)}.btn-mint{background:var(--mint)}.btn-yellow{background:var(--yellow)}.btn-white{background:#fff;border:1px solid var(--line)}
+.shell{max-width:1200px;margin:auto;padding:20px}
+.hero,.lessonHead,.panel{background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero{padding:30px;border-radius:28px;margin-top:16px;position:relative;overflow:hidden}
+.hero:after{content:"🎮";position:absolute;right:28px;top:18px;font-size:6rem;opacity:.07}
+.kicker{font-size:.8rem;font-weight:950;letter-spacing:1.2px;text-transform:uppercase;color:#2563eb}
+h1{font-size:clamp(2.2rem,6vw,4.7rem);letter-spacing:-2px;line-height:.96;margin:10px 0 12px}
+h2{margin:0 0 8px;font-size:1.5rem}
+.lead{max-width:820px;color:var(--muted);font-size:1.04rem;line-height:1.65}
+.classgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0}
+.classtile{border:0;border-radius:24px;text-align:left;padding:22px;min-height:235px;box-shadow:var(--shadow);transition:.16s transform;color:var(--ink)}
+.classtile:hover{transform:translateY(-4px)}
+.classtile .n{font-size:3.8rem;font-weight:1000;line-height:1;margin:10px 0}
+.classtile .e{font-size:2rem}.classtile p{line-height:1.45}
+.c4{background:#dbeafe}.c5{background:#ede9fe}.c6{background:#ccfbf1}.c7{background:#fef3c7}
+.tag{display:inline-block;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(0,0,0,.05);font-size:.78rem;font-weight:900}
+.lessonHead{padding:24px;border-radius:24px;margin-top:16px}
+.startrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.startrow input{flex:1;min-width:230px}
+input[type=text],textarea,select{width:100%;border:1px solid #d5d9e0;border-radius:12px;padding:12px 14px;background:#fff;color:var(--ink)}
+.progress{margin-top:18px}.ptxt{display:flex;justify-content:space-between;color:var(--muted);font-size:.88rem;margin-bottom:6px}
+.track{height:12px;background:#e8edf3;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,#60a5fa,#a78bfa,#5eead4);transition:.3s}
+.game{display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px;margin-top:18px}
+.sidebar{background:#fff;border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow);align-self:start;position:sticky;top:78px}
+.stepnav{display:grid;gap:6px}.step{border:0;border-radius:11px;padding:9px 10px;text-align:left;background:#f8fafc;color:var(--muted);font-weight:800}.step.active{background:#e0f2fe;color:#075985}.step.done:after{content:" ✓";color:#059669}.step:disabled{opacity:.45}
+.panel{border-radius:24px;padding:24px;min-width:0}.stageTop{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.icon{font-size:2rem;background:#f8fafc;border-radius:15px;padding:10px}
+.explain{margin:14px 0;padding:15px;background:#f8fafc;border:1px solid #e8edf3;border-radius:15px;line-height:1.65}
+.word{margin:10px 0;padding:12px 14px;background:#eff6ff;border-left:4px solid #60a5fa;border-radius:0 12px 12px 0;line-height:1.55}
+.tip{margin:12px 0;padding:12px 14px;border-left:4px solid #fbbf24;background:#fffbeb;border-radius:0 12px 12px 0;line-height:1.5}
+.taskbox{margin-top:16px;padding:16px;border:2px dashed #d7dde6;border-radius:18px;background:#fcfcfd}
+.choicegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.choice{border:2px solid #e5e7eb;background:#fff;border-radius:14px;padding:13px;text-align:left;font-weight:780;min-height:58px}
+.choice.selected{border-color:#60a5fa;background:#eff6ff}.choice.correct{border-color:#22c55e;background:#ecfdf5}.choice.wrong{border-color:#fb7185;background:#fff1f2}
+.tfgrid{display:grid;gap:9px;margin-top:12px}.tfrow{display:grid;grid-template-columns:minmax(0,1fr) 100px 100px;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px}
+.tfrow button{border:1px solid #d8dde5;background:#fff;border-radius:10px;padding:9px;font-weight:850}.tfrow button.sel{background:#e0f2fe;border-color:#60a5fa}
+.feedback{min-height:24px;margin-top:10px;font-weight:900}.ok{color:#059669}.no{color:#e11d48}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.bigcode{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:900;font-size:1.2rem;letter-spacing:1px;padding:14px;border-radius:13px;background:#111827;color:#fff;overflow-wrap:anywhere}
+.filetree{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#f8fafc;border:1px solid #e5e7eb;border-radius:14px;padding:14px;white-space:pre-wrap;line-height:1.7}
+.draggrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.bank,.zone{padding:12px;border-radius:15px;min-height:130px}.bank{background:#f8fafc;border:1px solid #e5e7eb}.zone{background:#f0fdf4;border:2px dashed #86efac;margin-bottom:8px}
+.dragitem{display:flex;justify-content:space-between;gap:8px;align-items:center;background:#fff;border:1px solid #dfe3e8;border-radius:11px;padding:9px;margin:7px 0;cursor:grab}.dragitem button{border:0;background:#eef2ff;border-radius:8px;padding:6px 8px;font-weight:850}
+.orderlist{display:grid;gap:8px;margin-top:10px}.orderitem{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #dfe3e8;border-radius:12px;padding:10px}.num{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:#eef2ff;font-weight:950}.moves{margin-left:auto;display:flex;gap:5px}.moves button{border:0;background:#f1f5f9;border-radius:8px;padding:6px 9px}
+.matchgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.matchrow{display:contents}.matchlabel{padding:11px;border-radius:11px;background:#f8fafc;border:1px solid #e5e7eb;font-weight:800}
+.mock{border:1px solid #dfe3e8;border-radius:17px;overflow:hidden;background:#fff}.mockhead{display:flex;gap:7px;padding:10px;background:#f1f5f9;border-bottom:1px solid #dfe3e8}.dot{width:10px;height:10px;border-radius:50%;background:#cbd5e1}.mockbody{padding:16px;line-height:1.6}
+.hot{
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:8px;
+  padding:2px 4px;
+  cursor:pointer;
+}
+.hot:hover{background:#f8fafc;border-color:#e5e7eb}
+.hot.found{background:#dbeafe;border-color:#60a5fa}
+.hot.goodpick{background:#dcfce7;border-color:#86efac}
+.hot.badpick{background:#ffe4e6;border-color:#fda4af}
+.practice{display:grid;gap:10px}.practice label{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:11px}
+.finish{text-align:center;padding:28px}.trophy{font-size:5rem}.stars{font-size:2.2rem;letter-spacing:4px}.footer{text-align:center;color:var(--muted);padding:28px 0 36px}
+@media(max-width:980px){.classgrid{grid-template-columns:repeat(2,1fr)}.game{grid-template-columns:1fr}.sidebar{position:static}.stepnav{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.classgrid,.choicegrid,.draggrid,.matchgrid{grid-template-columns:1fr}.tfrow{grid-template-columns:1fr 1fr}.tfrow>span{grid-column:1/-1}.stepnav{grid-template-columns:1fr 1fr}.panel{padding:17px}.hero{padding:22px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="topin">
+  <div class="logo">🎮 <b>Misje</b> Informatyczne</div>
+  <div class="actions-top">
+    <div class="pill hidden" id="scoreChip">⭐ <span id="score">0</span> pkt</div>
+    <button class="btn btn-white hidden" id="backBtn" type="button">← Wybór klasy</button>
+    <button class="btn btn-white hidden" id="resetBtn" type="button">↻ Nowy uczeń</button>
+  </div>
+</div></div>
+
+<main class="shell">
+<section id="home">
+  <div class="hero">
+    <div class="kicker">Lekcja na ok. 45 minut</div>
+    <h1>Wybierz klasę<br>i zacznij zabawę</h1>
+    <p class="lead">Najpierw dostaniesz krótkie wyjaśnienie. Potem wykonasz różne zadania: klikniesz odpowiedź, zaznaczysz prawda/fałsz, przeciągniesz elementy, ułożysz kolejność i zrobisz zadanie na komputerze.</p>
+  </div>
+  <div class="classgrid">
+    <button class="classtile c4" data-class="4"><div class="e">📁🎨🧩</div><div class="n">4</div><span class="tag">Zaginiony plik</span><p>Foldery, pliki i porządek na komputerze.</p></button>
+    <button class="classtile c5" data-class="5"><div class="e">🔐📡🕵️</div><div class="n">5</div><span class="tag">Tajny kod</span><p>Szyfry i ukryte wiadomości.</p></button>
+    <button class="classtile c6" data-class="6"><div class="e">🤖🔎📰</div><div class="n">6</div><span class="tag">Prawda czy nie?</span><p>Jak sprawdzać informacje w Internecie.</p></button>
+    <button class="classtile c7" data-class="7"><div class="e">🎣🛡️🔗</div><div class="n">7</div><span class="tag">Cyberpułapka</span><p>Jak nie dać się oszukać w sieci.</p></button>
+  </div>
+</section>
+
+<section id="classView" class="hidden">
+  <div class="lessonHead">
+    <div class="kicker" id="classKicker"></div>
+    <h2 id="classTitle"></h2>
+    <p class="lead" id="classIntro"></p>
+    <div class="startrow">
+      <input id="studentName" type="text" placeholder="Wpisz imię i nazwisko">
+      <button id="startBtn" class="btn btn-blue" type="button">Rozpocznij 🚀</button>
+    </div>
+    <div class="progress"><div class="ptxt"><span>Postęp</span><span id="progressText">0/10</span></div><div class="track"><div class="fill" id="progressFill"></div></div></div>
+  </div>
+
+  <div id="game" class="game hidden">
+    <aside class="sidebar"><div class="stepnav" id="stepNav"></div></aside>
+    <section class="panel" id="stage"></section>
+  </div>
+</section>
+<div class="footer">Misje Informatyczne • uczysz się przez działanie</div>
+</main>
+
+<script>
+(()=>{
+const META={
+4:{k:'Klasa 4 • 10 zadań',t:'Zaginiony plik',i:'Najpierw wyjaśnimy, czym jest plik i folder. Potem zrobisz kilka prostych zadań i jedno większe zadanie w Paint.',btn:'btn-blue'},
+5:{k:'Klasa 5 • 10 zadań',t:'Tajny kod',i:'Najpierw zobaczysz, czym jest szyfr. Potem będziesz odczytywać krótkie ukryte wiadomości i stworzysz własny kod.',btn:'btn-violet'},
+6:{k:'Klasa 6 • 10 zadań',t:'Prawda czy nie?',i:'Najpierw nauczysz się, jak sprawdzać informacje. Potem ocenisz kilka postów i wiadomości.',btn:'btn-mint'},
+7:{k:'Klasa 7 • 10 zadań',t:'Cyberpułapka',i:'Najpierw poznasz kilka prostych znaków ostrzegawczych. Potem sprawdzisz wiadomości i linki.',btn:'btn-yellow'}
+};
+const LABELS={
+4:['Start','Plik czy folder?','Prawda/Fałsz','Połącz','Przeciągnij','Droga do pliku','Ułóż kroki','Znajdź błąd','Zadanie w Paint','Finał'],
+5:['Start','Szyfr Cezara','Prawda/Fałsz','Odszyfruj','Morse','Połącz','Ułóż kroki','Szybka seria','Twój szyfr','Finał'],
+6:['Start','Najlepsze miejsce','Prawda/Fałsz','Ułóż od najlepszego','Znajdź podejrzane słowa','Połącz','Co warto sprawdzić?','Ułóż kroki','Co zrobisz?','Finał'],
+7:['Start','Podejrzana wiadomość','Prawda/Fałsz','Skrzynka','Znajdź podejrzane słowa','Adres strony','Połącz','Ułóż kroki','Co zrobisz?','Finał']
+};
+let cls=null,step=0,score=0,name='',done=new Set();
+const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+const home=q('#home'),classView=q('#classView'),game=q('#game'),stage=q('#stage'),stepNav=q('#stepNav');
+const scoreEl=q('#score'),scoreChip=q('#scoreChip'),backBtn=q('#backBtn'),resetBtn=q('#resetBtn'),studentName=q('#studentName'),startBtn=q('#startBtn');
+
+qa('.classtile').forEach(b=>b.addEventListener('click',()=>openClass(+b.dataset.class)));
+backBtn.addEventListener('click',goHome);
+resetBtn.addEventListener('click',resetStudent);
+startBtn.addEventListener('click',startGame);
+
+function openClass(c){
+ cls=c;step=0;score=0;name='';done=new Set();
+ home.classList.add('hidden');classView.classList.remove('hidden');scoreChip.classList.remove('hidden');backBtn.classList.remove('hidden');resetBtn.classList.remove('hidden');
+ q('#classKicker').textContent=META[c].k;q('#classTitle').textContent=META[c].t;q('#classIntro').textContent=META[c].i;
+ startBtn.className='btn '+META[c].btn;studentName.value='';studentName.disabled=false;game.classList.add('hidden');update();window.scrollTo({top:0,behavior:'smooth'});
+}
+function goHome(){classView.classList.add('hidden');home.classList.remove('hidden');scoreChip.classList.add('hidden');backBtn.classList.add('hidden');resetBtn.classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+
+function resetStudent(){
+  if(!cls) return;
+  const ok = confirm('Rozpocząć od początku dla nowego ucznia? Wszystkie punkty i postęp zostaną wyzerowane.');
+  if(!ok) return;
+
+  step=0;
+  score=0;
+  name='';
+  done=new Set();
+
+  studentName.value='';
+  studentName.disabled=false;
+  game.classList.add('hidden');
+
+  update();
+  renderNav();
+
+  const m=META[cls];
+  q('#classKicker').textContent=m.k;
+  q('#classTitle').textContent=m.t;
+  q('#classIntro').textContent=m.i;
+
+  studentName.focus();
+  window.scrollTo({top:q('.lessonHead').offsetTop,behavior:'smooth'});
+}
+function startGame(){name=studentName.value.trim();if(!name){studentName.focus();return}studentName.disabled=true;game.classList.remove('hidden');renderNav();show(0)}
+function update(){scoreEl.textContent=score;q('#progressText').textContent=done.size+'/10';q('#progressFill').style.width=(done.size/10*100)+'%'}
+function complete(points=10){if(!done.has(step)){done.add(step);score+=points;update();renderNav()}}
+function renderNav(){stepNav.innerHTML=LABELS[cls].map((x,i)=>`<button type="button" class="step ${i===step?'active':''} ${done.has(i)?'done':''}" data-s="${i}" ${i>0&&!done.has(i-1)?'disabled':''}>${i+1}. ${x}</button>`).join('');qa('.step').forEach(b=>b.addEventListener('click',()=>show(+b.dataset.s)))}
+function show(s){step=s;renderNav();stage.innerHTML=render();bind();window.scrollTo({top:q('.lessonHead').offsetTop,behavior:'smooth'})}
+function nextButton(){if(q('#nextBtn'))return;stage.insertAdjacentHTML('beforeend','<div class="controls"><button id="nextBtn" type="button" class="btn btn-blue">Dalej →</button></div>');q('#nextBtn').addEventListener('click',()=>show(Math.min(9,step+1)))}
+function fb(t,ok=true){const f=q('#feedback');if(f){f.textContent=t;f.className='feedback '+(ok?'ok':'no')}}
+function head(icon,k,t,d){return `<div class="stageTop"><div><div class="kicker">${k}</div><h2>${t}</h2></div><div class="icon">${icon}</div></div><p class="lead">${d}</p>`}
+function choiceBox(opts,multi=false){return `<div class="choicegrid" id="${multi?'multi':'single'}">${opts.map(o=>`<button type="button" class="choice" data-ok="${o[1]?1:0}">${o[0]}</button>`).join('')}</div>`}
+function render(){return cls===4?r4(step):cls===5?r5(step):cls===6?r6(step):r7(step)}
+function finalScreen(icon,title,txt){return `<div class="finish"><div class="trophy">${icon}</div><div class="kicker">Koniec misji</div><h2>${title}</h2><p class="lead" style="margin:auto">${txt}</p><div class="stars">⭐⭐⭐⭐⭐</div><p><b>${esc(name)}</b>, zdobywasz <b>${score}</b> punktów.</p><div class="controls" style="justify-content:center"><button id="restart" class="btn btn-white" type="button">Zagraj jeszcze raz</button></div></div>`}
+
+function r4(s){
+ if(s===0)return head('📁','1/10','Najpierw poznaj 3 słowa','Przeczytaj krótkie wyjaśnienie. Potem od razu zrobisz zadanie.')+
+ `<div class="word"><b>Folder</b> – miejsce, w którym trzymamy pliki. To trochę jak pudełko.</div>
+ <div class="word"><b>Plik</b> – konkretna rzecz na komputerze, np. zdjęcie, dokument albo piosenka.</div>
+ <div class="word"><b>Droga do pliku</b> – pokazuje, w jakich folderach znajduje się plik.</div>
+ <div class="taskbox"><b>Zaznacz wszystkie pliki.</b>${choiceBox([['📁 Wakacje',0],['📄 referat.docx',1],['🖼️ kot.png',1],['📁 Szkoła',0]],true)}<div class="controls"><button id="multiCheck" class="btn btn-blue">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`;
+ if(s===1)return head('📁','2/10','Plik czy folder?','Pamiętaj: folder jest jak pudełko. Plik to konkretna rzecz.')+
+ `<div class="taskbox"><b>Kliknij folder.</b>${choiceBox([['muzyka.mp3',0],['Wakacje',1],['zdjecie.jpg',0],['plan.txt',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===2)return head('✅','3/10','Prawda czy fałsz','Kliknij Prawda albo Fałsz przy każdym zdaniu.')+tf([
+ ['Folder może mieć w środku pliki.',true],
+ ['Zdjęcie .jpg to folder.',false],
+ ['Plik może mieć nazwę, np. kot.png.',true],
+ ['Zmiana nazwy pliku kasuje jego zawartość.',false]
+ ]);
+ if(s===3)return head('🧩','4/10','Połącz słowo z wyjaśnieniem','Wybierz z listy najlepsze wyjaśnienie.')+
+ match([['Folder','miejsce na pliki'],['Plik','np. zdjęcie albo dokument'],['Nazwa pliku','np. robot.png'],['Droga do pliku','pokazuje, gdzie jest plik']]);
+ if(s===4)return head('🧹','5/10','Posprzątaj pliki','Przeciągnij każdy plik do odpowiedniego miejsca. Jeśli nie chcesz przeciągać, kliknij „Przenieś”.')+
+ dragTask([['referat.docx','📄','Dokumenty'],['kot.png','🖼️','Obrazy'],['piosenka.mp3','🎵','Muzyka'],['plan.txt','📝','Dokumenty']],['Dokumenty','Obrazy','Muzyka']);
+ if(s===5)return head('🗺️','6/10','Znajdź drogę do pliku','Spójrz na rysunek folderów. Potem wybierz poprawną odpowiedź.')+
+ `<div class="filetree">SZKOŁA
+└── Informatyka
+    └── Rysunki
+        └── robot.png</div><div class="taskbox"><b>Gdzie jest plik robot.png?</b>${choiceBox([
+ ['SZKOŁA → Informatyka → Rysunki → robot.png',1],
+ ['Rysunki → SZKOŁA → robot.png',0],
+ ['SZKOŁA → robot.png → Informatyka',0],
+ ['Informatyka → robot.png → SZKOŁA',0]
+ ])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===6)return head('🔢','7/10','Ułóż kroki','Przesuwaj strzałkami. Na górze ma być to, co robimy najpierw.')+
+ orderTask(['Utwórz folder Rysunki','Uruchom Paint i narysuj obrazek','Kliknij Zapisz jako','Wybierz folder Rysunki i zapisz plik']);
+ if(s===7)return head('🐞','8/10','Znajdź błąd','Uczeń mówi: „Zapisałem obrazek w folderze Zdjęcia”. Sprawdź, czy mówi prawdę.')+
+ `<div class="bigcode">Pulpit → SZKOŁA → Dokumenty → kot.png</div><div class="taskbox"><b>Co jest nie tak?</b>${choiceBox([
+ ['Plik jest w folderze Dokumenty, a nie Zdjęcia',1],
+ ['Plik nie ma nazwy',0],
+ ['Nie wolno mieć folderu Dokumenty',0],
+ ['Każde zdjęcie musi być w Muzyce',0]
+ ])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===8)return head('🎨','9/10','Zadanie w Paint','Teraz wykonaj prawdziwe zadanie na komputerze. Rób po kolei.')+
+ practice(['Na Pulpicie utwórz folder TAJNA MISJA.','W nim utwórz foldery Rysunki, Dokumenty i Zdjęcia.','Otwórz Paint i narysuj zabawnego robota.','Dodaj swoje imię.','Zapisz obrazek jako robot.png w folderze Rysunki.','Zamknij Paint i odszukaj swój plik.']);
+ return finalScreen('🏆','Mistrz plików i folderów','Umiesz już tworzyć foldery, zapisywać pliki i odnajdywać je na komputerze.');
+}
+function r5(s){
+ if(s===0)return head('🔐','1/10','Co to jest szyfr?','Najpierw poznaj jedno nowe słowo.')+
+ `<div class="word"><b>Szyfr</b> – sposób ukrycia wiadomości według ustalonej zasady.</div>
+ <div class="explain">Przykład: przesuwamy każdą literę o 1.<br>A→B, B→C, C→D<br><b>KOT → LPU</b></div>
+ <div class="taskbox"><b>Jak zapiszesz słowo DOM po przesunięciu każdej litery o 1?</b>${choiceBox([['EPN',1],['DOM',0],['CNL',0],['FRO',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===1)return head('🏛️','2/10','Szyfr Cezara','To prosty szyfr: przesuwamy każdą literę o tyle samo miejsc.')+
+ `<div class="word"><b>Tu przesuwamy o 3 miejsca.</b> A→D, B→E, C→F.</div>
+ <div class="bigcode">LQIRUPDWBND</div><div class="taskbox"><b>Odszyfruj słowo.</b><input id="textAnswer" type="text" placeholder="Wpisz odpowiedź" style="margin-top:10px"><div class="controls"><button id="textCheck" class="btn btn-violet">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`;
+ if(s===2)return head('✅','3/10','Prawda czy fałsz','Kliknij odpowiedź przy każdym zdaniu.')+tf([
+ ['Szyfr działa według jakiejś zasady.',true],
+ ['Każdy szyfr musi używać tylko cyfr.',false],
+ ['Wiadomość można zaszyfrować literami, cyframi albo znakami.',true],
+ ['Jeśli znamy zasadę szyfru, łatwiej odczytać wiadomość.',true]
+ ]);
+ if(s===3)return head('🕵️','4/10','Odszyfruj 5 słów','Każda litera została przesunięta o 1. Cofnij każdą literę o 1.')+
+ speedTask([['EPN','DOM'],['LPU','KOT'],['MBT','LAS'],['SPL','ROK'],['OPT','NOS']]);
+ if(s===4)return head('📡','5/10','Kod Morse’a','Tu litery zapisujemy kropkami i kreskami.')+
+ `<div class="word"><b>S = ...</b><br><b>O = ---</b></div><div class="bigcode">... / --- / ...</div><div class="taskbox"><b>Jakie to słowo?</b><input id="textAnswer" type="text" placeholder="Wpisz słowo"><div class="controls"><button id="textCheck" class="btn btn-violet">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`;
+ if(s===5)return head('🧩','6/10','Połącz przykład z nazwą','Wybierz z listy odpowiednią nazwę.')+
+ match([['... --- ...','kod Morse’a'],['01000001','kod z zer i jedynek'],['KOT → LPU','przesunięcie liter'],['🔺🌙⭐','kod obrazkami']]);
+ if(s===6)return head('🔢','7/10','Ułóż kroki','Jak przygotować własną zaszyfrowaną wiadomość?')+
+ orderTask(['Wymyśl krótką wiadomość','Wymyśl prostą zasadę','Zaszyfruj wiadomość według tej zasady','Daj ją koledze i sprawdź, czy potrafi ją odczytać']);
+ if(s===7)return head('⚡','8/10','Szybka seria','Wpisz krótkie odpowiedzi. Potrzebujesz 5 poprawnych z 6.')+
+ quickSeries([
+ ['Jeśli A→B, to C→?','D'],['Jeśli każdą literę przesuwamy o 2, B→?','D'],['... --- ... to?','SOS'],['Czy szyfr może używać emoji?','TAK'],['Czy zasada szyfru powinna być taka sama dla całej wiadomości?','TAK'],['KOT→LPU to przesunięcie o?','1']
+ ]);
+ if(s===8)return head('🧪','9/10','Zrób własny szyfr','Napisz wiadomość, zaszyfruj ją i napisz prostą zasadę.')+
+ customCipher();
+ return finalScreen('🕵️','Młody kryptolog','Umiesz już odczytać prosty szyfr i zrobić własną ukrytą wiadomość.');
+}
+function r6(s){
+ if(s===0)return head('🔎','1/10','Najpierw poznaj 2 słowa','Te słowa będą potrzebne w kolejnych zadaniach.')+
+ `<div class="word"><b>Źródło</b> – miejsce, z którego pochodzi informacja. Może to być np. strona szkoły, e-dziennik albo film w Internecie.</div>
+ <div class="word"><b>Sprawdzić informację</b> – zobaczyć, czy to samo potwierdza inne dobre źródło.</div>
+ <div class="taskbox"><b>Widzisz ważną wiadomość bez autora. Co robisz?</b>${choiceBox([['Od razu wysyłam dalej',0],['Sprawdzam, kto to napisał i gdzie jeszcze jest taka informacja',1],['Wierzę, bo ma dużo lajków',0],['Zgaduję',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===1)return head('🏫','2/10','Gdzie najlepiej sprawdzić?','Chcesz wiedzieć, czy jutro szkoła jest zamknięta.')+
+ `<div class="taskbox"><b>Wybierz najlepsze miejsce.</b>${choiceBox([['Oficjalna strona szkoły lub e-dziennik',1],['Losowy filmik',0],['Komentarz pod postem',0],['Wiadomość „ktoś mówił”',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===2)return head('✅','3/10','Prawda czy fałsz','Kliknij odpowiedź przy każdym zdaniu.')+tf([
+ ['Dużo lajków nie znaczy, że informacja jest prawdziwa.',true],
+ ['Ładne zdjęcie zawsze oznacza prawdziwą informację.',false],
+ ['Warto sprawdzić datę wiadomości.',true],
+ ['Dobrze jest porównać informację z innym miejscem.',true]
+ ]);
+ if(s===3)return head('🏅','4/10','Ułóż od najlepszego','Na górze ustaw miejsce, któremu najbardziej ufasz w sprawie informacji o szkole.')+
+ orderTask(['Oficjalna strona szkoły','Wiadomość w e-dzienniku','Anonimowy filmik','Komentarz „mój kolega mówił”']);
+ if(s===4)return head('🚩','5/10','Znajdź podejrzane fragmenty','Przeczytaj całą wiadomość. Kliknij tylko te fragmenty, które wydają Ci się podejrzane. Nie wszystkie są złe.')+
+ hotspot(`<span class="hot" data-hot data-ok="1"><b>PILNE!!!</b></span>
+ <span class="hot" data-hot data-ok="0">Jutro rano</span>
+ <span class="hot" data-hot data-ok="1"><b>ZAMYKAJĄ WSZYSTKIE SZKOŁY</b></span>
+ <span class="hot" data-hot data-ok="0">w naszym mieście.</span>
+ <span class="hot" data-hot data-ok="1"><b>UDOSTĘPNIJ ZANIM USUNĄ!</b></span>
+ <br><br>
+ <span class="hot" data-hot data-ok="0">Wiadomość pojawiła się wieczorem.</span>
+ Napisane przez:
+ <span class="hot" data-hot data-ok="1"><b>„ktoś z grupy”</b></span>.`);
+ if(s===5)return head('🧩','6/10','Połącz pytanie z tym, co sprawdzasz','Wybierz z listy najlepsze wyjaśnienie.')+
+ match([['Kto to napisał?','sprawdzam autora'],['Kiedy to napisano?','sprawdzam datę'],['Czy ktoś jeszcze to potwierdza?','szukam drugiego miejsca z tą informacją'],['Czy szkoła podała to u siebie?','sprawdzam oficjalny komunikat']]);
+ if(s===6)return head('☑️','7/10','Co warto sprawdzić?','Zaznacz tylko te rzeczy, które naprawdę pomagają.')+
+ `<div class="taskbox">${choiceBox([['Kto napisał wiadomość',1],['Kiedy ją napisano',1],['Czy inne dobre miejsce mówi to samo',1],['Czy obrazek jest ładny',0]],true)}<div class="controls"><button id="multiCheck" class="btn btn-mint">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`;
+ if(s===7)return head('🔢','8/10','Ułóż kroki','Co robisz, gdy widzisz bardzo sensacyjną wiadomość?')+
+ orderTask(['Nie wysyłam jej dalej od razu','Sprawdzam, kto ją napisał i kiedy','Szukam potwierdzenia w innym dobrym miejscu','Dopiero wtedy decyduję, czy można ją przekazać dalej']);
+ if(s===8)return head('🚦','9/10','Co zrobisz?','Na grupie klasowej ktoś pisze: „Jutro nie ma lekcji”. Nie ma żadnego linku ani informacji, kto to podał.')+
+ `<div class="taskbox"><b>Wybierz najlepszą odpowiedź.</b>${choiceBox([['Wysyłam wszystkim',0],['Sprawdzam e-dziennik albo stronę szkoły',1],['Piszę „na pewno prawda”',0],['Robię screen i przesyłam dalej',0]])}<div id="feedback" class="feedback"></div></div>`;
+ return finalScreen('🔎','Cyfrowy detektyw','Umiesz już zatrzymać się, sprawdzić autora, datę i inne dobre miejsce z informacją.');
+}
+function r7(s){
+ if(s===0)return head('🎣','1/10','Najpierw poznaj 3 proste znaki ostrzegawcze','Oszust może udawać firmę albo znajomą osobę. Chce, żebyś szybko kliknął albo podał dane.')+
+ `<div class="word"><b>Presja czasu</b> – ktoś pisze „masz 10 minut”, żebyś nie zdążył pomyśleć.</div>
+ <div class="word"><b>Podejrzany link</b> – adres strony wygląda dziwnie albo tylko udaje znaną firmę.</div>
+ <div class="word"><b>Prośba o hasło lub pieniądze</b> – to zawsze powinno zapalić lampkę ostrzegawczą.</div>
+ <div class="taskbox"><b>Która wiadomość wygląda najbardziej podejrzanie?</b>${choiceBox([['„Dopłać 1,49 zł w ciągu 10 minut”',1],['„Jutro lekcja w sali 12” w e-dzienniku',0],['„Pamiętaj o sprawdzianie” od nauczyciela',0],['„Zadanie domowe jest w zakładce Materiały”',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===1)return head('📨','2/10','Podejrzana wiadomość','Przeczytaj spokojnie. Nie klikaj żadnych prawdziwych linków.')+
+ `<div class="bigcode">Twoja paczka czeka. Dopłać 1,49 zł teraz.</div><div class="word"><b>Ważne:</b> mała kwota nie znaczy, że wiadomość jest bezpieczna.</div><div class="taskbox"><b>Co robisz?</b>${choiceBox([['Klikam, bo to tylko 1,49 zł',0],['Nie klikam. Otwieram samodzielnie oficjalną aplikację przewoźnika i tam sprawdzam paczkę',1],['Wysyłam link koledze',0],['Wpisuję dane, żeby zobaczyć co będzie',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===2)return head('✅','3/10','Prawda czy fałsz','Kliknij odpowiedź przy każdym zdaniu.')+tf([
+ ['Wiadomość „masz tylko 5 minut” może próbować mnie przestraszyć.',true],
+ ['To samo hasło do wszystkich kont jest dobrym pomysłem.',false],
+ ['Dodatkowy kod przy logowaniu może lepiej chronić konto.',true],
+ ['Mała kwota w wiadomości oznacza, że można bezpiecznie kliknąć link.',false]
+ ]);
+ if(s===3)return head('📬','4/10','Sprawdź skrzynkę','Zaznacz wszystkie podejrzane wiadomości.')+
+ `<div class="taskbox">${choiceBox([['📦 „Dopłać 1,49 zł do paczki”',1],['🎮 „Wygrałeś darmowe skiny — zaloguj się tutaj”',1],['🏫 Wiadomość w e-dzienniku o zmianie sali',0],['📱 „Mam nowy numer. Przelej mi 900 zł”',1]],true)}<div class="controls"><button id="multiCheck" class="btn btn-yellow">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`;
+ if(s===4)return head('🚩','5/10','Znajdź podejrzane fragmenty','Przeczytaj wiadomość. Kliknij tylko te fragmenty, które są dla Ciebie sygnałem ostrzegawczym.')+
+ hotspot(`<span class="hot" data-hot data-ok="1"><b>OSTATNIE OSTRZEŻENIE</b></span><br>
+ <span class="hot" data-hot data-ok="0">Twoje konto jest nadal aktywne.</span>
+ <span class="hot" data-hot data-ok="1">Masz tylko <b>15 minut</b>.</span>
+ <span class="hot" data-hot data-ok="0">Wiadomość dotyczy Twojego konta.</span>
+ <span class="hot" data-hot data-ok="1"><b>Kliknij link i wpisz hasło</b></span>,
+ <span class="hot" data-hot data-ok="0">aby przejść dalej.</span>`);
+ if(s===5)return head('🔗','6/10','Który adres wygląda najprościej i najpewniej?','Adres strony to tekst widoczny u góry przeglądarki. Oszuści mogą używać bardzo podobnych nazw.')+
+ `<div class="word"><b>Przykład:</b> „example.com” wygląda prosto. „example-login-security.xyz” tylko próbuje wyglądać podobnie.</div>
+ <div class="taskbox">${choiceBox([['example.com',1],['example-login-security.xyz',0],['example.com.login-check.net',0],['secure-example-account.site',0]])}<div id="feedback" class="feedback"></div></div>`;
+ if(s===6)return head('🧩','7/10','Połącz sytuację z reakcją','Wybierz z listy najbezpieczniejsze zachowanie.')+
+ match([['Podejrzany SMS z linkiem','nie klikam i sprawdzam w oficjalnej aplikacji'],['Ktoś prosi o moje hasło','nie podaję hasła'],['„Mam nowy numer, przelej pieniądze”','kontaktuję się z tą osobą innym znanym sposobem'],['Widzę obce logowanie na koncie','zmieniam hasło i mówię dorosłemu lub nauczycielowi']]);
+ if(s===7)return head('🔢','8/10','Ułóż kroki','Załóżmy, że przez pomyłkę wpisałeś hasło na podejrzanej stronie.')+
+ `<div class="word"><b>Dodatkowy kod przy logowaniu</b> – drugi krok po haśle, np. kod w aplikacji lub SMS. Pomaga lepiej chronić konto.</div>`+
+ orderTask(['Wchodzę samodzielnie na prawdziwą stronę lub aplikację','Zmieniam hasło','Włączam dodatkowy kod przy logowaniu i sprawdzam obce logowania','Jeśli to samo hasło było gdzie indziej, zmieniam je także tam']);
+ if(s===8)return head('🚨','9/10','Co zrobisz?','Kliknąłeś podejrzany link, ale nie wpisałeś żadnych danych i niczego nie pobrałeś.')+
+ `<div class="taskbox"><b>Wybierz najlepszą odpowiedź.</b>${choiceBox([['Zamykam stronę i niczego nie wpisuję. Jeśli coś wygląda dziwnie, mówię dorosłemu lub nauczycielowi',1],['Wysyłam link koledze',0],['Wpisuję dane dla testu',0],['Klikam jeszcze raz',0]])}<div id="feedback" class="feedback"></div></div>`;
+ return finalScreen('🛡️','Cyberstrażnik','Umiesz już zauważyć presję czasu, podejrzane linki i prośby o hasło lub pieniądze.');
+}
+
+function tf(items){return `<div class="taskbox"><div class="tfgrid" id="tf">${items.map((x,i)=>`<div class="tfrow" data-answer="${x[1]?'T':'F'}"><span>${x[0]}</span><button type="button" data-v="T">Prawda</button><button type="button" data-v="F">Fałsz</button></div>`).join('')}</div><div class="controls"><button id="tfCheck" class="btn btn-white">Sprawdź wszystkie</button></div><div id="feedback" class="feedback"></div></div>`}
+function match(items){return `<div class="taskbox"><div class="matchgrid" id="match">${items.map((x,i)=>`<div class="matchrow"><div class="matchlabel">${x[0]}</div><select data-a="${escAttr(x[1])}"><option value="">— wybierz —</option>${shuffle(items.map(y=>y[1])).map(v=>`<option>${v}</option>`).join('')}</select></div>`).join('')}</div><div class="controls"><button id="matchCheck" class="btn btn-white">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`}
+function dragTask(items,zones){return `<div class="taskbox"><div class="draggrid"><div class="bank" id="bank"><b>Pliki do posprzątania</b>${items.map(x=>`<div class="dragitem" draggable="true" data-target="${x[2]}"><span>${x[1]} ${x[0]}</span><button type="button">Przenieś</button></div>`).join('')}</div><div>${zones.map(z=>`<div class="zone" data-zone="${z}"><b>📁 ${z}</b></div>`).join('')}</div></div><div id="feedback" class="feedback"></div></div>`}
+function orderTask(items){return `<div class="taskbox"><div class="orderlist" id="order" data-correct='${JSON.stringify(items)}'>${shuffle(items).map(x=>`<div class="orderitem"><span class="num"></span><span>${x}</span><span class="moves"><button type="button" data-dir="-1">↑</button><button type="button" data-dir="1">↓</button></span></div>`).join('')}</div><div class="controls"><button id="orderCheck" class="btn btn-white">Sprawdź kolejność</button></div><div id="feedback" class="feedback"></div></div>`}
+function hotspot(body){return `<div class="taskbox"><div class="mock"><div class="mockhead"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="mockbody">${body}</div></div><div class="controls"><button id="hotCheck" class="btn btn-white">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`}
+function speedTask(pairs){return `<div class="taskbox" id="speed">${pairs.map(p=>`<div style="display:grid;grid-template-columns:90px 1fr;gap:8px;align-items:center;margin:8px 0"><b>${p[0]}</b><input type="text" data-a="${p[1]}" placeholder="wpisz słowo"></div>`).join('')}<div class="controls"><button id="speedCheck" class="btn btn-violet">Sprawdź</button></div><div id="feedback" class="feedback"></div></div>`}
+function quickSeries(items){return `<div class="taskbox" id="quick">${items.map((p,i)=>`<div style="margin:9px 0"><b>${i+1}. ${p[0]}</b><input type="text" data-a="${p[1]}" placeholder="odpowiedź" style="margin-top:5px"></div>`).join('')}<div class="controls"><button id="quickCheck" class="btn btn-violet">Sprawdź 6 odpowiedzi</button></div><div id="feedback" class="feedback"></div></div>`}
+function customCipher(){return `<div class="taskbox"><label>1. Napisz krótką wiadomość:</label><input id="plain" type="text" placeholder="np. SPOTKANIE O 12"><label style="display:block;margin-top:9px">2. Zaszyfruj ją:</label><input id="cipher" type="text"><label style="display:block;margin-top:9px">3. Napisz prostą zasadę:</label><textarea id="rule" rows="3" placeholder="np. każdą literę przesuwam o 1"></textarea><div class="controls"><button id="customCheck" class="btn btn-violet">Gotowe</button></div><div id="feedback" class="feedback"></div></div><div class="tip">💡 Jeśli skończysz, zamień się z osobą obok i spróbujcie odczytać swoje wiadomości.</div>`}
+function practice(items){return `<div class="taskbox"><div class="practice" id="practice">${items.map((x,i)=>`<label><input type="checkbox"> <span><b>${i+1}.</b> ${x}</span></label>`).join('')}</div><div class="controls"><button id="practiceCheck" class="btn btn-blue">Wszystko zrobione</button></div><div id="feedback" class="feedback"></div></div>`}
+
+function bind(){
+ if(step===9){complete(10);const r=q('#restart');if(r)r.addEventListener('click',()=>{step=0;score=0;done=new Set();update();show(0)});return}
+ const single=q('#single');if(single)qa('#single .choice').forEach(b=>b.addEventListener('click',()=>{qa('#single .choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');if(b.dataset.ok==='1'){b.classList.add('correct');fb('Brawo! +10 pkt');complete();nextButton()}else{b.classList.add('wrong');fb('Nie. Spróbuj jeszcze raz.',false)}}));
+ const multi=q('#multi');if(multi){qa('#multi .choice').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('selected')));q('#multiCheck').addEventListener('click',()=>{const all=qa('#multi .choice');const ok=all.every(b=>b.classList.contains('selected')===(b.dataset.ok==='1'));if(ok){all.forEach(b=>{if(b.dataset.ok==='1')b.classList.add('correct')});fb('Dobrze! +10 pkt');complete();nextButton()}else fb('Sprawdź zaznaczenia jeszcze raz.',false)})}
+ const tfc=q('#tf');if(tfc){qa('.tfrow').forEach((row,i)=>qa(`#tf .tfrow:nth-child(${i+1}) button`).forEach(b=>b.addEventListener('click',()=>{qa(`#tf .tfrow:nth-child(${i+1}) button`).forEach(x=>x.classList.remove('sel'));b.classList.add('sel');row.dataset.sel=b.dataset.v})));q('#tfCheck').addEventListener('click',()=>{const rows=qa('.tfrow');if(rows.some(r=>!r.dataset.sel)){fb('Odpowiedz na wszystkie zdania.',false);return}const ok=rows.every(r=>r.dataset.sel===r.dataset.answer);if(ok){fb('Wszystko dobrze! +10 pkt');complete();nextButton()}else fb('Co najmniej jedna odpowiedź jest zła. Spróbuj jeszcze raz.',false)})}
+ const matchc=q('#match');if(matchc)q('#matchCheck').addEventListener('click',()=>{const sels=qa('#match select');const ok=sels.every(s=>s.value===s.dataset.a);if(ok){fb('Wszystkie pary są dobre! +10 pkt');complete();nextButton()}else fb('Nie wszystkie pary pasują. Spróbuj jeszcze raz.',false)});
+ bindDrag();bindOrder();bindHot();
+ const tc=q('#textCheck');if(tc)tc.addEventListener('click',()=>{const v=q('#textAnswer').value.trim().toUpperCase();const ans=(cls===5&&step===1)?'INFORMATYKA':'SOS';if(v===ans){fb('Dobrze! +10 pkt');complete();nextButton()}else fb('Jeszcze nie. Spróbuj ponownie.',false)});
+ const sc=q('#speedCheck');if(sc)sc.addEventListener('click',()=>{let n=0;qa('#speed input').forEach(i=>{if(i.value.trim().toUpperCase()===i.dataset.a)n++});if(n>=4){fb(`${n}/5 dobrze. +10 pkt`);complete();nextButton()}else fb(`Masz ${n}/5. Potrzebujesz co najmniej 4.`,false)});
+ const qc=q('#quickCheck');if(qc)qc.addEventListener('click',()=>{let n=0;qa('#quick input').forEach(i=>{if(i.value.trim().toUpperCase()===i.dataset.a)n++});if(n>=5){fb(`${n}/6 dobrze. +10 pkt`);complete();nextButton()}else fb(`Masz ${n}/6. Potrzebujesz minimum 5.`,false)});
+ const cc=q('#customCheck');if(cc)cc.addEventListener('click',()=>{if(q('#plain').value.trim().length>=4&&q('#cipher').value.trim().length>=4&&q('#rule').value.trim().length>=8){fb('Twój szyfr jest gotowy! +10 pkt');complete();nextButton()}else fb('Uzupełnij wszystkie trzy pola.',false)});
+ const pc=q('#practiceCheck');if(pc)pc.addEventListener('click',()=>{const all=qa('#practice input');if(all.every(x=>x.checked)){fb('Świetnie! +10 pkt');complete();nextButton()}else fb('Najpierw wykonaj wszystkie kroki.',false)});
+}
+function bindDrag(){
+ const bank=q('#bank');if(!bank)return;let dragged=null;
+ qa('.dragitem').forEach(item=>{
+  item.addEventListener('dragstart',()=>dragged=item);
+  item.querySelector('button').addEventListener('click',()=>{const z=qa('.zone').find(x=>x.dataset.zone===item.dataset.target);z.appendChild(item);check()})
+ });
+ qa('.zone').forEach(z=>{z.addEventListener('dragover',e=>e.preventDefault());z.addEventListener('drop',e=>{e.preventDefault();if(dragged){z.appendChild(dragged);dragged=null;check()}})});
+ function check(){const items=qa('.dragitem');if(items.every(i=>i.parentElement.dataset.zone===i.dataset.target)){fb('Wszystkie pliki są na miejscu! +10 pkt');complete();nextButton()}}
+}
+function bindOrder(){
+ const list=q('#order');if(!list)return;const correct=JSON.parse(list.dataset.correct);
+ function nums(){[...list.children].forEach((x,i)=>x.querySelector('.num').textContent=i+1)}nums();
+ list.addEventListener('click',e=>{const b=e.target.closest('button[data-dir]');if(!b)return;const item=b.closest('.orderitem'),dir=+b.dataset.dir;if(dir<0&&item.previousElementSibling)list.insertBefore(item,item.previousElementSibling);if(dir>0&&item.nextElementSibling)list.insertBefore(item.nextElementSibling,item);nums()});
+ q('#orderCheck').addEventListener('click',()=>{const now=[...list.children].map(x=>x.children[1].textContent.trim());if(now.every((x,i)=>x===correct[i])){fb('Dobra kolejność! +10 pkt');complete();nextButton()}else fb('Jeszcze nie. Przesuń kroki i spróbuj ponownie.',false)})
+}
+function bindHot(){
+ const hs=qa('.hot');if(!hs.length)return;
+ hs.forEach(h=>h.addEventListener('click',()=>h.classList.toggle('found')));
+ q('#hotCheck').addEventListener('click',()=>{
+   const correct=hs.filter(h=>h.dataset.ok==='1');
+   const neutral=hs.filter(h=>h.dataset.ok!=='1');
+   const allCorrect=correct.every(h=>h.classList.contains('found'));
+   const noWrong=neutral.every(h=>!h.classList.contains('found'));
+
+   hs.forEach(h=>{
+     h.classList.remove('goodpick','badpick');
+     if(h.classList.contains('found')){
+       h.classList.add(h.dataset.ok==='1' ? 'goodpick' : 'badpick');
+     }
+   });
+
+   if(allCorrect && noWrong){
+     fb('Brawo! Wybrałeś tylko podejrzane fragmenty. +10 pkt');
+     complete();
+     nextButton();
+   } else {
+     const goodCount=correct.filter(h=>h.classList.contains('found')).length;
+     const wrongCount=neutral.filter(h=>h.classList.contains('found')).length;
+     fb(`Dobre tropy: ${goodCount}/${correct.length}. Nietrafione zaznaczenia: ${wrongCount}. Spróbuj jeszcze raz.`,false);
+   }
+ })
+}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function esc(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function escAttr(s){return esc(s)}
+})();
+</script>
+</body>
+</html>
